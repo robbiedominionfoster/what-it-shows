@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · split by problem'
 owner: Robert Foster
-status: open
+status: living
 reviewed: 2026-10-29
 signature: v1.eyJzdWIiOiI3OTMxIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyODU4NjgsImV4cCI6MTc5MzM3MjI2OH0.N3Pc_jtHu8gsrhXl-JbPkz82JdgKUTlvqf6Ap5Ud3XI
 ---
@@ -13,17 +13,25 @@ signature: v1.eyJzdWIiOiI3OTMxIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYX
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 
   const repo = 'https://github.com/robbiedominionfoster/what-it-shows/issues';
-  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, oneDayMove: `${repo}/3` };
+  const tickets = {
+    parser: { url: `${repo}/1`, state: 'fixed' },
+    hint: { url: `${repo}/2`, state: "won't fix" },
+    oneDayMove: { url: `${repo}/3`, state: 'open' },
+  };
 </script>
 
-[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Its reports say
-otherwise. They describe more than one problem, and the queued parser fix closes only one of them.
-Each problem now has its own ticket, with its own count.
+[#4471](/kb/incidents/4471) was merged as one issue with one fix. Its reports describe more than
+one problem. Each problem now has its own ticket, with its own count, counted the way the desk counts.
 
 <ProblemTable ticket={4471} {tickets} />
 
+Engineering closed #4471 on 5 October:
+
+- **parser:** fixed, `fix(dates): parse dd/mm for eu locales`.
+- **hint:** won't fix. The booking-v3 form is retired.
+
 <Callout kind="warn">
-Fixing the parser does not close the other tickets. Keep #4471 open until each ticket above is fixed.
+The one-day move is not fixed. The parser fix does not touch it, and nobody owns it yet. Its ticket stays open.
 </Callout>
 
 ## How the reports split
