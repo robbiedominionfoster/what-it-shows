@@ -4,7 +4,7 @@ title: '#4471 · split by problem'
 owner: Robert Foster
 status: open
 reviewed: 2026-10-29
-signature: Robert Foster (robbiedominionfoster), with GitHub Copilot
+signature: v1.eyJzdWIiOiI3OTMxIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyODU4NjgsImV4cCI6MTc5MzM3MjI2OH0.N3Pc_jtHu8gsrhXl-JbPkz82JdgKUTlvqf6Ap5Ud3XI
 ---
 
 <script>
