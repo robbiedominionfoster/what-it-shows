@@ -1,0 +1,54 @@
+---
+layout: runbook
+title: '#4471 · split by problem'
+owner: Robert Foster
+status: open
+reviewed: 2026-10-29
+signature: Robert Foster (robbiedominionfoster), with GitHub Copilot
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/robbiedominionfoster/what-it-shows/issues';
+  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, oneDayMove: `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. Its reports say
+otherwise. They describe more than one problem, and the queued parser fix closes only one of them.
+Each problem now has its own ticket, with its own count.
+
+<ProblemTable ticket={4471} {tickets} />
+
+<Callout kind="warn">
+Fixing the parser does not close the other tickets. Keep #4471 open until each ticket above is fixed.
+</Callout>
+
+## How the reports split
+
+Placed by tenant and channel with `causes.ts`, not by subject and not by intake tag.
+
+- **Shared parser.** The parser reads every date month first, and every tenant here writes the
+  day first. 7 April comes out as 4 July. This is what #4471 says it is.
+- **booking-v3 form hint.** The booking-v3 form prints `MM/DD/YYYY` under its date field. People
+  type month first, as told, and the form reads the value the tenant's way, day first. It is the
+  same swap with a different cause. Only form reports from booking-v3 tenants land here. The same
+  tenants' app and email reports belong to the parser.
+- **One-day move.** In these reports day and month do not swap. The date moves by one day: one
+  meeting held on Monday in Toronto and Tuesday in Lisbon, an invite that arrived before its
+  booking. The desk noted them as a one-day move (`desk-notes.json`) and still filed them under
+  the parser by tenant. A parser fix leaves them as they are. They point to a time zone or
+  daylight saving conversion.
+
+## Why one ticket hid them
+
+- Subject lines do not separate causes. Most subjects in #4471 appear under more than one
+  problem, so merging on subject ([decision 0001](/kb/decisions/0001-dedupe-by-subject)) puts
+  them all in one ticket.
+- The intake tag guesses from the reporter's browser. The cause depends on the tenant. The
+  *intake tagged as* column above shows how often the two disagree.
+- The ticket-system export repeats rows across pages. Count by report id.
+
+<RenderStamp {signature} />
